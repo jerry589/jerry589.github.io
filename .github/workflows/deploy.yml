@@ -28,8 +28,10 @@ jobs:
       - name: Build Hexo
         run: npx hexo generate
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
-          artifact_name: github-pages
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
