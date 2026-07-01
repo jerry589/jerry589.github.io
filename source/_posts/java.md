@@ -114,7 +114,7 @@ class MyException extends Exception{ }
 
 *   @Override
 
-    ![](/images/posts/6bc86480-f0a1-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
+    ![](https://gitee.com/jerry798/xcximg/raw/master/img/6bc86480-f0a1-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
 
 <!---->
 
@@ -208,7 +208,7 @@ System.out.println(arg); // 打印每个参数\
 }\
 }
 
-![](/images/posts/33a365e0-ee68-11ee-b6ca-c58dfcc2c94b.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/33a365e0-ee68-11ee-b6ca-c58dfcc2c94b.jpeg\&type=image)
 
 ##### 声明二维数组
 
@@ -229,7 +229,7 @@ int\[]\[] muti \= new int\[9]\[9];
 基本数据类型不是对象，它们没有方法和属性。当你需要将基本数据类型作为对象来处理时（例如，需要将其作为**集合框架（Collections Framework）中的元素**，或者需要调用其方法时），或者**泛型编程**中：\
 （Java泛型类型参数只接受引用类型）就需要使用**包装类**
 
-![](/images/posts/b357c0f0-ee6e-11ee-b6ca-c58dfcc2c94b.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/b357c0f0-ee6e-11ee-b6ca-c58dfcc2c94b.jpeg\&type=image)
 
 装称为**装箱**，所以当内置数据类型被当作对象使用的时候，编译器会把内置类型装箱为**包装类**
 
@@ -263,7 +263,7 @@ substring(3，6)从第三个字符截取到第六个字符
 
 产生两个对象使用包含变量的表达式来创建String对象，则**不仅会检查维护String池，还会在堆栈区创建一个String对象。**
 
-![](/images/posts/7024a510-013c-11ef-adfa-afb758844719.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/7024a510-013c-11ef-adfa-afb758844719.jpeg\&type=image)
 
 同一个池子公用内存地址相同
 
@@ -278,13 +278,13 @@ substring(3，6)从第三个字符截取到第六个字符
 
 Double.parseint()字符串转换成数字
 
-![](/images/posts/d55e76c0-0ba2-11ef-9766-0f2d41db0037.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/d55e76c0-0ba2-11ef-9766-0f2d41db0037.jpeg\&type=image)
 
 stringbuilder类
 
 ### 集合框架
 
-![](/images/posts/92bc0e20-0f46-11ef-8a2e-7321d27cee78.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/92bc0e20-0f46-11ef-8a2e-7321d27cee78.jpeg\&type=image)
 
 集合和数组的区别：
 
@@ -358,13 +358,13 @@ JPanel不能独立运行，必须包含在另一个容器里\*\*。\*\*JPanel没
 
 4.如果是引用类型或者数组的，传递给形参的就是地址，直接改变原本值的内容
 
-![](/images/posts/233abb00-f09c-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/233abb00-f09c-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
 
 5.重载（名字相同参数不一样）与重写（键一样值不一样）
 
 重写注意点
 
-![](/images/posts/e60b75e0-f0bd-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/e60b75e0-f0bd-11ee-a0c3-7b484fd2b043.jpeg\&type=image)
 
 6.在Java中，使用`Scanner`类进行输入时，记得清空缓存区域，确保读取到的是正确的字符，因为上一个输入流会留下换行符，`nextLine()`方法用于读取一行文本，直到遇到换行符（`\n`）为止，所以一般会scanner.nextLine();清空缓冲区
 
@@ -402,7 +402,7 @@ Scanner scanner \= new Scanner(**System.in**)
 
 12.接口是一种特殊的抽象类，里面的东西都要被实现
 
-13.![](/images/posts/24458d80-f63d-11ee-8f32-75e4d7aba2f9.jpeg\&type=image)
+13.![](https://gitee.com/jerry798/xcximg/raw/master/img/24458d80-f63d-11ee-8f32-75e4d7aba2f9.jpeg\&type=image)
 
 14.接口是一种特殊的抽象类，它也可以用来直接创建对象
 
