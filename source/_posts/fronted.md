@@ -265,7 +265,7 @@ class ClassName {
 let site = new ClassName("菜鸟教程", "https://www.runoob.com");
 ```
 
-![https://gitee.com/jerry798/xcximg/raw/master/img/6c0a3400-879c-11ee-bfb6-29337c594ac4_20231120200038.jpeg&token=V1:XBL791VliQ0L_2ob1AttD_C7W8ixj71QOBxb9odm5qI)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/6c0a3400-879c-11ee-bfb6-29337c594ac4_20231120200038.jpeg)
 
 new 根据类创造新的对象
 
@@ -277,7 +277,7 @@ new 根据类创造新的对象
 
 所有 JavaScript 中的对象都是位于原型链顶端的 Object 的**实例**。
 
-![https://gitee.com/jerry798/xcximg/raw/master/img/1565fb70-87a6-11ee-bfb6-29337c594ac4_20231120210947.jpeg&token=V1:ifO5OjWF8vkkTuwcmJd5WcCR1Nrp9spsh1Kb-MyfbeY)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/1565fb70-87a6-11ee-bfb6-29337c594ac4_20231120210947.jpeg)
 
 ## DOM
 
@@ -304,7 +304,7 @@ document.getElementById(id).innerHTML = 新的 HTML;
 document.getElementById(id).attribute = 新属性值;
 ```
 
-![https://gitee.com/jerry798/xcximg/raw/master/img/4f029220-838d-11ee-8ba1-c17bd710ad78_20231115160223.jpeg&token=V1:auOtuaKiFUxEIbBR03-HjcQKe_eXBp5OWGl1Cr_xsFk)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/4f029220-838d-11ee-8ba1-c17bd710ad78_20231115160223.jpeg)
 
 ### 改变 HTML 样式
 
@@ -390,9 +390,9 @@ var c = {
 
 ## js 实例
 
-![https://gitee.com/jerry798/xcximg/raw/master/img/bee6cf50-84f7-11ee-ac40-7f71f2a5eb40_20231117111647.jpeg&token=V1:TcQrtdxcOHk2_LHiIFxb0yowS2SYaFM0Q4ycelk4CIY)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/bee6cf50-84f7-11ee-ac40-7f71f2a5eb40_20231117111647.jpeg)
 
-![https://gitee.com/jerry798/xcximg/raw/master/img/d028fe00-84f7-11ee-ac40-7f71f2a5eb40_20231117111717.jpeg&token=V1:bIXlkwDk5b2Pu1deQtfFVrBJEZtnFiunbXHMNLDr1Ek)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/d028fe00-84f7-11ee-ac40-7f71f2a5eb40_20231117111717.jpeg)
 
 ## BOM
 

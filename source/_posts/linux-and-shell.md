@@ -23,7 +23,7 @@ tags: [Linux, Shell, 操作系统, 学习笔记]
 
 ## linux系统目录结构
 
-![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/c8986410-ec16-11ee-933d-9d65ad8ed90a.jpeg?v=1\&type=image>)
+![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/c8986410-ec16-11ee-933d-9d65ad8ed90a.jpeg\&type=image>)
 
 | **目录** | **描述** |
 | :-------------: | :---------------------------------------------------------------------: |
@@ -90,9 +90,9 @@ tags: [Linux, Shell, 操作系统, 学习笔记]
 
 ## Linux 文件基本属性(用户，组，权限)
 
-![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/7e4bd740-ec37-11ee-933d-9d65ad8ed90a.jpeg?v=1\&type=image>)
+![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/7e4bd740-ec37-11ee-933d-9d65ad8ed90a.jpeg\&type=image>)
 
-![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/9b3a9c10-ec37-11ee-933d-9d65ad8ed90a.jpeg?v=1\&type=image>)
+![](<linux and https://gitee.com/jerry798/xcximg/raw/master/img/9b3a9c10-ec37-11ee-933d-9d65ad8ed90a.jpeg\&type=image>)
 
 rwx分别代表读、写、执行，-为没有权限
 
