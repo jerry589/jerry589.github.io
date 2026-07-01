@@ -82,7 +82,7 @@ cookie 的中文翻译是曲奇，小甜饼的意思。cookie 其实就是一些
 
 Cookie 是可以进行设置的，可以人为设置 cookie 的有效时间，什么时候创建，什么时候销毁。
 
-![](学习笔记-web_md_files/46728a30-815c-11ee-94b5-71a3fbff1de4_20231112210620.jpeg?v=1&type=image&token=V1%3APnkg6WVD5ptO6kZ5s2GtfjKu2Yd09T7W1l1nT72fTDE)
+![https://gitee.com/jerry798/xcximg/raw/master/img/46728a30-815c-11ee-94b5-71a3fbff1de4_20231112210620.jpeg?v=1&type=image&token=V1%3APnkg6WVD5ptO6kZ5s2GtfjKu2Yd09T7W1l1nT72fTDE)
 
 ---
 
@@ -389,7 +389,7 @@ Windows 特有的命令 dir；
 
 # 科普一下：burpsuite 各项参数的意思
 
-![](学习笔记-web_md_files/7f85f7e0-c8eb-11ee-8cf6-55bfe6dcf2ab_20240211224027.jpeg?v=1&type=image&token=V1%3AXAJUphfBPniJ3q3oPPVE-Ff85Yu5xMjBOFGhNsmpUEc)
+![https://gitee.com/jerry798/xcximg/raw/master/img/7f85f7e0-c8eb-11ee-8cf6-55bfe6dcf2ab_20240211224027.jpeg?v=1&type=image&token=V1%3AXAJUphfBPniJ3q3oPPVE-Ff85Yu5xMjBOFGhNsmpUEc)
 
 ---
 

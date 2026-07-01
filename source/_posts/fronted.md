@@ -46,7 +46,7 @@ const 和 let 是有块级作用域概念的，也就是说在块级作用域中
 
 ### 3. 设置 let 原因(重新定义变量的问题)
 
-![](web_md_files/af9dc420-7efa-11ee-99c1-9fb38d38c90b.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/af9dc420-7efa-11ee-99c1-9fb38d38c90b.jpeg?v=1&type=image)
 
 因此在 Function 中局部变量推荐使用 let 变量，避免变量名冲突
 
@@ -139,7 +139,7 @@ for (x in person) { // x 为属性名
 }
 ```
 
-![](web_md_files/0e4b0820-8063-11ee-ba70-95ea6d5014dc.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/0e4b0820-8063-11ee-ba70-95ea6d5014dc.jpeg?v=1&type=image)
 
 break 的作用是跳出代码块, 所以 break 可以使用于循环和 switch 等
 
@@ -166,8 +166,8 @@ answer: x=5
 
 在后面赋值不会被用到前面
 
-![](web_md_files/5befc610-7f91-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
-![](web_md_files/a7623240-7f91-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/5befc610-7f91-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/a7623240-7f91-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
 
 ## JavaScript 正则表达式
 
@@ -204,11 +204,11 @@ JavaScript 中的模板字符串是一种方便的字符串语法，允许你**�
 
 ### ${存储变量或者表达式}
 
-变量：![](web_md_files/16dd18e0-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
+变量：![](https://gitee.com/jerry798/xcximg/raw/master/img/16dd18e0-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
 
-表达式![](web_md_files/2287b330-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
+表达式![](https://gitee.com/jerry798/xcximg/raw/master/img/2287b330-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
 
-![](web_md_files/ad931910-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/ad931910-7f94-11ee-b32b-a1aa6ea31392.jpeg?v=1&type=image)
 
 调用函数 function: ${name()}
 
@@ -265,7 +265,7 @@ class ClassName {
 let site = new ClassName("菜鸟教程", "https://www.runoob.com");
 ```
 
-![](前端_md_files/6c0a3400-879c-11ee-bfb6-29337c594ac4_20231120200038.jpeg?v=1&type=image&token=V1:XBL791VliQ0L_2ob1AttD_C7W8ixj71QOBxb9odm5qI)
+![https://gitee.com/jerry798/xcximg/raw/master/img/6c0a3400-879c-11ee-bfb6-29337c594ac4_20231120200038.jpeg?v=1&type=image&token=V1:XBL791VliQ0L_2ob1AttD_C7W8ixj71QOBxb9odm5qI)
 
 new 根据类创造新的对象
 
@@ -277,7 +277,7 @@ new 根据类创造新的对象
 
 所有 JavaScript 中的对象都是位于原型链顶端的 Object 的**实例**。
 
-![](前端_md_files/1565fb70-87a6-11ee-bfb6-29337c594ac4_20231120210947.jpeg?v=1&type=image&token=V1:ifO5OjWF8vkkTuwcmJd5WcCR1Nrp9spsh1Kb-MyfbeY)
+![https://gitee.com/jerry798/xcximg/raw/master/img/1565fb70-87a6-11ee-bfb6-29337c594ac4_20231120210947.jpeg?v=1&type=image&token=V1:ifO5OjWF8vkkTuwcmJd5WcCR1Nrp9spsh1Kb-MyfbeY)
 
 ## DOM
 
@@ -304,7 +304,7 @@ document.getElementById(id).innerHTML = 新的 HTML;
 document.getElementById(id).attribute = 新属性值;
 ```
 
-![](前端_md_files/4f029220-838d-11ee-8ba1-c17bd710ad78_20231115160223.jpeg?v=1&type=image&token=V1:auOtuaKiFUxEIbBR03-HjcQKe_eXBp5OWGl1Cr_xsFk)
+![https://gitee.com/jerry798/xcximg/raw/master/img/4f029220-838d-11ee-8ba1-c17bd710ad78_20231115160223.jpeg?v=1&type=image&token=V1:auOtuaKiFUxEIbBR03-HjcQKe_eXBp5OWGl1Cr_xsFk)
 
 ### 改变 HTML 样式
 
@@ -390,9 +390,9 @@ var c = {
 
 ## js 实例
 
-![](前端_md_files/bee6cf50-84f7-11ee-ac40-7f71f2a5eb40_20231117111647.jpeg?v=1&type=image&token=V1:TcQrtdxcOHk2_LHiIFxb0yowS2SYaFM0Q4ycelk4CIY)
+![https://gitee.com/jerry798/xcximg/raw/master/img/bee6cf50-84f7-11ee-ac40-7f71f2a5eb40_20231117111647.jpeg?v=1&type=image&token=V1:TcQrtdxcOHk2_LHiIFxb0yowS2SYaFM0Q4ycelk4CIY)
 
-![](前端_md_files/d028fe00-84f7-11ee-ac40-7f71f2a5eb40_20231117111717.jpeg?v=1&type=image&token=V1:bIXlkwDk5b2Pu1deQtfFVrBJEZtnFiunbXHMNLDr1Ek)
+![https://gitee.com/jerry798/xcximg/raw/master/img/d028fe00-84f7-11ee-ac40-7f71f2a5eb40_20231117111717.jpeg?v=1&type=image&token=V1:bIXlkwDk5b2Pu1deQtfFVrBJEZtnFiunbXHMNLDr1Ek)
 
 ## BOM
 
@@ -419,7 +419,7 @@ location.assign()   // 方法加载新的文档
 
 ### window navigator 对象
 
-![](PHP_md_files/8c8600b0-e1b0-11ee-b5a4-e12bedf642ca.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/8c8600b0-e1b0-11ee-b5a4-e12bedf642ca.jpeg?v=1&type=image)
 
 ### javascript弹窗
 
@@ -431,7 +431,7 @@ confirm()   // 确认框
 prompt()    // 提示框（可输入）
 ```
 
-![](PHP_md_files/8788d030-e1b3-11ee-b5a4-e12bedf642ca.jpeg?v=1&type=image)
+![](https://gitee.com/jerry798/xcximg/raw/master/img/8788d030-e1b3-11ee-b5a4-e12bedf642ca.jpeg?v=1&type=image)
 
 弹窗使用 反斜杠 + "n"(\n) 来设置换行。
 
