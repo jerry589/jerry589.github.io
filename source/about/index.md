@@ -14,6 +14,16 @@ comments: true
 
 <!-- more -->
 
+## 前端技能
+
+- 熟悉 **HTML5**、**CSS3**，能够使用 Flex/Grid 布局、媒体查询实现响应式页面开发。
+- 熟练掌握 **JavaScript**，理解原型链、闭包、事件循环等核心概念，熟悉 ES6+ 语法特性。
+- 掌握 **Vue.js** 全家桶（Vue Router、Vuex/Pinia、Axios），有 SPA 项目开发经验。
+- 了解 **React**，了解组件化开发思想与 Hooks 用法。
+- 熟悉 **Element Plus**、**ECharts** 等前端 UI 和数据可视化库。
+- 具有 **npm**、**Webpack**、**Vite** 等前端构建工具的使用经验。
+- 了解前端安全（XSS 防御、CSP、CSRF Token、Cookie 安全属性等）。
+
 ## 网络安全技能
 
 ### Web 安全
